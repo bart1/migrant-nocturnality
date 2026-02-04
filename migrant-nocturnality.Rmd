@@ -3,6 +3,23 @@ title: "Nocturnal migrants visualisation"
 author: "Bart Hoekstra"
 ---
 
+## Procedure overview
+
+This analysis estimates the proportion of European migratory birds that migrate by day, by night, or both. The workflow is:
+
+1. **Compile life-history traits.** Use the Storchova & Horak dataset to identify facultative, short-distance, and long-distance migrants.  
+2. **Add population estimates.** Join with the OPS EU28 population dataset, keeping the latest year per species and reconciling taxonomic name updates.  
+3. **Classify nocturnality.** Manually classify each species as nocturnal, diurnal, or both based on literature review and field experience (`species_list_nocturnality.xlsx`).  
+4. **Filter to migratory species.** Keep migratory species with a nocturnality classification.  
+5. **Summarize totals and proportions.** Sum population totals within each migration type and compute proportions of the overall total.  
+6. **Visualize.** Create a donut chart and save the output to `nocturnality.pdf`.
+
+## Data sources
+
+* **Life-history traits:** Storchova & Horak dataset (European birds).  
+* **Population estimates:** OPS EU28 population dataset (latest year per species).  
+* **Nocturnality classification:** Manual classification based on literature review and field experience.
+
 ```{r}
 library(tidyverse)
 library(auk)
@@ -108,7 +125,6 @@ ggdonut(data = data2, group_key = "migration_type", count_type = "count",
 
 ggsave("nocturnality.pdf", width = 4, height = 4)
 ```
-
 
 
 
